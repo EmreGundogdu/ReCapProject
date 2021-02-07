@@ -1,8 +1,10 @@
 ﻿using DataAccess.Abstract;
 using Entities.Concrete;
+using Entities.DTOs;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Text;
 
 namespace DataAccess.Concrete.InMemory
@@ -24,32 +26,56 @@ namespace DataAccess.Concrete.InMemory
             };
         }
 
+        public List<Car> GetAll()
+        {
+            return _cars;
+        }
+
         public void Add(Car car)
         {
             _cars.Add(car);
         }
 
-        public void Delete(Car car)
-        {
-            Car carDelete = null;
-            carDelete = _cars.SingleOrDefault(c => c.Id == c.Id);
-            _cars.Remove(carDelete);
-        }
-
-        public List<Car> GetCars()
-        {
-            return _cars;
-        }
-
         public void Update(Car car)
         {
-            Car carUpdate = null;
-            carUpdate = _cars.SingleOrDefault(c => c.Id == car.Id);
-            carUpdate.ModelYear = car.ModelYear;
-            carUpdate.ColorId = car.ColorId;
-            carUpdate.BrandId = car.BrandId;
-            carUpdate.DailyPrice = car.DailyPrice;
-            carUpdate.Description = car.Description;
+            Car carToUpadate = _cars.SingleOrDefault(c => c.Id == car.Id);
+            carToUpadate.BrandId = car.BrandId;
+            carToUpadate.ColorId = car.ColorId;
+            carToUpadate.DailyPrice = car.DailyPrice;
+            carToUpadate.ModelYear = car.ModelYear;
+            carToUpadate.Description = car.Description;
+
+        }
+
+        public void Delete(Car car)
+        {
+            Car carToDelete = _cars.SingleOrDefault(c => c.Id == car.Id);
+            _cars.Remove(carToDelete);
+        }
+
+        public Car GetById(int id)
+        {
+            return _cars.SingleOrDefault(c => c.Id == id);
+        }
+
+        public List<Car> GetAll(Expression<Func<Car, bool>> filter = null)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Car Get(Expression<Func<Car, bool>> filter)
+        {
+            throw new NotImplementedException();
+        }
+
+        public List<CarDetailDto> GetByCarsAll()
+        {
+            throw new NotImplementedException();
+        }
+
+        public List<CarDetailDto> GetCarDetails()
+        {
+            throw new NotImplementedException();
         }
     }
 }
